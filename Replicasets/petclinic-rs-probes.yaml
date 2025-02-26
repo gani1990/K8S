@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: petclinic-rs
+  labels:
+    project: learning
+    team: devops
+    app: petclinic
+    version: v1
+spec:
+  minReadySeconds: 45
+  replicas: 4
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        project: learning
+        team: devops
+        app: petclinic
+        version: v1
+    spec:
+      containers:
+        - name: petclinic
+          image: gani1990/petclinic
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100M
+            limits:
+              cpu: 300m
+              memory: 300M
+          ports:
+            - name: petclinic-port
+              containerPort: 8080
+          startupProbe:
+            exec:
+              command:
+                - pwd
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 3
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: petclinic
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
