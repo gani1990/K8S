@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: petclinic
-          image: gani1990/petclinic
+          image: gani1990/petclinic:2
           resources:
             requests:
               cpu: 10m
