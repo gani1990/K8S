@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1%40service": "file:///d%3A/Repos/K8S/Replicasets/petclinic-rs-probes.yaml"
+    }
+}
