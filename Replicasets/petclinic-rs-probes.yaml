@@ -27,11 +27,11 @@ spec:
           image: gani1990/petclinic:2
           resources:
             requests:
-              cpu: 10m
-              memory: 100M
+              cpu: 500m
+              memory: 512M
             limits:
-              cpu: 300m
-              memory: 300M
+              cpu: 1
+              memory: 512M
           ports:
             - name: petclinic-port
               containerPort: 8080
@@ -46,7 +46,7 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 300
+            initialDelaySeconds: 120
             periodSeconds: 60
             successThreshold: 1
           #   failureThreshold: 1
@@ -54,7 +54,7 @@ spec:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 300
+            initialDelaySeconds: 120
             periodSeconds: 60
             successThreshold: 3
             failureThreshold: 3
